@@ -4,7 +4,7 @@ terraform-vultr is a proof-of-concept terraform configuration to demonstrate usi
 
 ## Disclaimer
 
-Due to the abstraction layer between the yaml files and terraform, it can fail in weird and wonderful ways and the error may not be obvious. It's questionable if this abstraction layer is a good idea at all. You probably shouldn't use in in production.
+Due to the abstraction layer between the yaml files and terraform, it can fail in weird and wonderful ways and the error may not be obvious. It's questionable if this abstraction layer is a good idea at all. You probably shouldn't use it in production.
 
 
 ## Configuration
