@@ -1,0 +1,19 @@
+servers:
+
+  test-01:
+    plan: nano
+    region: london
+    os: debian_10
+    private_networks:
+      - default_london
+    script: Default-Debian
+    firewall: allow_all
+
+  test-02:
+    plan: nano
+    region: new-jersey
+    os: debian_10
+    firewall: allow_all
+
+  test-03:
+    region: london

@@ -1,0 +1,11 @@
+networks:
+
+  default_new-jersey:
+    description: Default private network
+    region: new-jersey
+    cidr_block: 10.1.96.0/20
+
+  default_london:
+    description: Default private network
+    region: london
+    cidr_block: 10.8.96.0/20
