@@ -7,7 +7,7 @@ locals {
 
 resource "vultr_network" "network" {
 
-  for_each = local.decoded_yaml.networks
+  for_each = local.decoded_yaml.networks != null ? local.decoded_yaml.networks : {}
 
   description = each.value.description
   region_id   = var.region_ids["${each.value.region}"].id

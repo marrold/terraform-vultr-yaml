@@ -23,7 +23,7 @@ locals {
 
 resource "vultr_firewall_group" "firewall_group" {
 
-  for_each = local.decoded_yaml.firewalls
+  for_each = local.decoded_yaml.firewalls != null ? local.decoded_yaml.firewalls : {}
 
   description = each.key
 
@@ -31,7 +31,7 @@ resource "vultr_firewall_group" "firewall_group" {
 
 resource "vultr_firewall_rule" "firewall_rule" {
 
-    for_each = local.merged_firewall_rules
+    for_each = local.merged_firewall_rules != null ? local.merged_firewall_rules : {}
 
     firewall_group_id = vultr_firewall_group.firewall_group[each.value.firewall_group].id
 
