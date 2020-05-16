@@ -90,6 +90,15 @@ firewalls:
 
 It's possible to add a custom startup-script in `./startup-scripts` and then ensure it's ran on a new instance after it has been created.
 
+### ISOs 
+
+You can create a custom ISO by downloading it from a public URL. It can then be assisgned to a server to boot from.
+
+#### Options
+
+- **key**: Used to name the ISO. Should be unique. [Mandatory]
+- **url**: The URL to download the ISO from
+
 ### Servers
 
 Servers are defined in `servers.yaml`
@@ -116,6 +125,7 @@ servers:
 
   test-03:
     region: london
+    iso: freepbx
 ```
 
 #### Options
@@ -123,7 +133,8 @@ servers:
 - **key**: Will be used as the hostname [Mandatory]
 - **plan**: What size instance to create. Defaults to "nano" ($5 Instance) 
 - **region**: Where to locate the instance. Defaults to London
-- **os**: The instance's OS. Defaults to Debian 10.
+- **os**: The instance's OS. Cannot be used in conjunction with iso
+- **iso**: The ISO for the instance to boot from. Cannot be used in conjunction with os.
 - **private_networks**: A list of private networks to attach. Default behaviour is to not attach a private network. 
 - **script**: The name of a script to run on first boot.
 - **firewall**: The name of the firewall group to attach to the server. Default is none.

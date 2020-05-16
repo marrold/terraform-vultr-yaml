@@ -17,3 +17,4 @@ servers:
 
   test-03:
     region: london
+    iso: freepbx15_SNG7-PBX-64bit-2002

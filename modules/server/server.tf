@@ -11,8 +11,10 @@ resource "vultr_server" "server" {
 
     plan_id           = lookup(each.value, "plan", null) != null ? var.plan_ids["${each.value.plan}"].id : 201                # Defaults to £5 instance
     region_id         = lookup(each.value, "region", null) != null ? var.region_ids["${each.value.region}"].id : 8            # Defaults to London
-    os_id             = lookup(each.value, "os", null) != null ? var.os_ids["${each.value.os}"].id : 352                      # Defaults to Debian 10
     firewall_group_id = lookup(each.value, "firewall", null)!= null ? var.firewall_ids["${each.value.firewall}"].id : null    # Defaults to none
+
+    os_id             = lookup(each.value, "os", null) != null ? var.os_ids["${each.value.os}"].id : null
+    iso_id            = lookup(each.value, "iso", null)!= null ? var.iso_ids["${each.value.iso}"].id : null
 
     label     = each.key
     tag       = each.key

@@ -26,3 +26,7 @@ variable "script_ids" {
 variable "firewall_ids" {
   description = "Map of Firewall IDs"
 }
+
+variable "iso_ids" {
+  description = "Map of ISO IDs"
+}
