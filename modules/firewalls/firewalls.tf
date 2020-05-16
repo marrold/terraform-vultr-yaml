@@ -35,8 +35,6 @@ resource "vultr_firewall_rule" "firewall_rule" {
 
     firewall_group_id = vultr_firewall_group.firewall_group[each.value.firewall_group].id
 
-    # lookup(each.value, "to_port", null)
-
     protocol  = each.value.protocol
     network   = each.value.network
     from_port = lookup(each.value, "from_port", 1)
