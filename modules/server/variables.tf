@@ -30,3 +30,7 @@ variable "firewall_ids" {
 variable "iso_ids" {
   description = "Map of ISO IDs"
 }
+
+variable "key_ids" {
+  description = "Map of key IDs"
+}

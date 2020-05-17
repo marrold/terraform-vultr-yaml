@@ -9,7 +9,7 @@ Due to the abstraction layer between the yaml files and terraform, it can fail i
 
 ## Configuration
 
-It's assumed that you already have Terraform configured. 
+It's assumed that you already have Terraform configured.
 
 - Copy `provider.tf_EXAMPLE` to `provider.tf`
 - Edit the `api_key` to the Personal Access Token created in your account
@@ -32,13 +32,13 @@ networks:
     region: new-jersey
     cidr_block: 10.1.96.0/20
  ```
- 
+
  #### Options
  - **key**: The object key isn't used for provisioning but should be unique. [Mandatory]
  - **description**: Description of the network. [Mandatory]
  - **region**: Where to create the network. [Mandatory]
  - **cidr_block**: The subnet to assign to the network. [Mandatory]
- 
+
 ### Firewalls
 
 Creating firewall groups and rules is also supported. An instance can be attatched to a firewall group. Firewalls are defined in `firewalls.yaml`
@@ -90,14 +90,23 @@ firewalls:
 
 It's possible to add a custom startup-script in `./startup-scripts` and then ensure it's ran on a new instance after it has been created.
 
-### ISOs 
+### ISOs
 
-You can create a custom ISO by downloading it from a public URL. It can then be assisgned to a server to boot from.
+You can create a custom ISO by downloading it from a public URL. It can then be assigned to a server to boot from.
 
 #### Options
 
 - **key**: Used to name the ISO. Should be unique. [Mandatory]
 - **url**: The URL to download the ISO from
+
+### Keys
+
+You can create SSH keys to then supply
+
+#### Options
+
+- **key**: Used to name the Key. Should be unique. [Mandatory]
+- **ssh_key**: The SSH Key
 
 ### Servers
 
@@ -126,15 +135,18 @@ servers:
   test-03:
     region: london
     iso: freepbx
+    keys:
+      - provisioning
 ```
 
 #### Options
 
 - **key**: Will be used as the hostname [Mandatory]
-- **plan**: What size instance to create. Defaults to "nano" ($5 Instance) 
+- **plan**: What size instance to create. Defaults to "nano" ($5 Instance)
 - **region**: Where to locate the instance. Defaults to London
 - **os**: The instance's OS. Cannot be used in conjunction with iso
 - **iso**: The ISO for the instance to boot from. Cannot be used in conjunction with os.
-- **private_networks**: A list of private networks to attach. Default behaviour is to not attach a private network. 
+- **private_networks**: A list of private networks to attach. Default behaviour is to not attach a private network.
 - **script**: The name of a script to run on first boot.
 - **firewall**: The name of the firewall group to attach to the server. Default is none.
+- ** ssh_key**: A list of ssh keys to associate with the server.

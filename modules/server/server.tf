@@ -21,6 +21,14 @@ resource "vultr_server" "server" {
     hostname  = each.key
     script_id = lookup(each.value, "script", null) != null ? var.script_ids["${each.value.script}"].id : null
 
+    # This mess will generate a list of key_ids. If none are specified it generates an empty list.
+    # If the key doesn't exist it will fail with the cryptic error "Null values are not allowed for this attribute value."
+    ssh_key_ids = lookup(each.value, "keys", null) != null ? flatten([
+      for key in each.value.keys : [
+        lookup(var.key_ids, "${key}", null) != null ? var.key_ids[key].id : null
+      ]
+    ]) : []
+
     # This mess will generate a list of network_ids. If none are specified it generates an empty list.
     # If the network doesn't exist it will fail with the cryptic error "Null values are not allowed for this attribute value."
     network_ids = lookup(each.value, "private_networks", null) != null ? flatten([
