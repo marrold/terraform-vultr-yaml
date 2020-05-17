@@ -7,7 +7,7 @@ locals {
 
 resource "vultr_server" "server" {
 
-    for_each = local.decoded_yaml.servers != null ? local.decoded_yaml.servers : {}
+    for_each = try(local.decoded_yaml.servers != null ? local.decoded_yaml.servers : tomap(false), {})
 
     plan_id           = lookup(each.value, "plan", null) != null ? var.plan_ids["${each.value.plan}"].id : 201                # Defaults to £5 instance
     region_id         = lookup(each.value, "region", null) != null ? var.region_ids["${each.value.region}"].id : 8            # Defaults to London
