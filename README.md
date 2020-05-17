@@ -101,7 +101,7 @@ You can create a custom ISO by downloading it from a public URL. It can then be 
 
 ### Keys
 
-You can create SSH keys to then supply
+You can create SSH keys to then configure a server to use them.
 
 #### Options
 
