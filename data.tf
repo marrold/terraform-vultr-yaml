@@ -4,8 +4,9 @@
 
 data "vultr_plan" "nano" {
   filter {
-    name   = "name"
-    values = ["1024 MB RAM,25 GB SSD,1.00 TB BW"]
+    name   = "id"
+    #values = ["1024 MB RAM,25 GB SSD,1.00 TB BW"]
+    values = ["vc2-1c-1gb"]
   }
 }
 
@@ -38,15 +39,15 @@ locals {
 
 data "vultr_region" "new-jersey" {
   filter {
-    name   = "name"
-    values = ["New Jersey"]
+    name   = "id"
+    values = ["ewr"]
   }
 }
 
 data "vultr_region" "london" {
   filter {
-    name   = "name"
-    values = ["London"]
+    name   = "id"
+    values = ["lhr"]
   }
 }
 
@@ -63,7 +64,7 @@ locals {
 
 resource "vultr_startup_script" "Default-Debian" {
     name = "Default-Debian"
-    script = file("./startup-scripts/Default-Debian.sh")
+    script = base64encode(file("./startup-scripts/Default-Debian.sh"))
 }
 
 locals {

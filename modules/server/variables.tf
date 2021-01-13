@@ -29,8 +29,10 @@ variable "firewall_ids" {
 
 variable "iso_ids" {
   description = "Map of ISO IDs"
+  default = {}
 }
 
 variable "key_ids" {
   description = "Map of key IDs"
+  default = {}
 }

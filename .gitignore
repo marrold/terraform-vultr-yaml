@@ -6,6 +6,7 @@
 *.tfstate.backup
 *.tfstate.bk
 *.tfstate.*.backup
+*.terraform.lock.hcl
 
 # DNS isn't for public release
 modules/server/dns.tf

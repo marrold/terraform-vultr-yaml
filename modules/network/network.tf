@@ -5,12 +5,14 @@ locals {
 
 }
 
-resource "vultr_network" "network" {
+resource "vultr_private_network" "network" {
 
   for_each = local.decoded_yaml.networks != null ? local.decoded_yaml.networks : {}
 
   description = each.value.description
-  region_id   = var.region_ids["${each.value.region}"].id
-  cidr_block  = each.value.cidr_block
+  region      = var.region_ids[each.value.region].id
+
+  v4_subnet  = element(split("/", each.value.cidr_block), 0)
+  v4_subnet_mask = element(split("/", each.value.cidr_block), 1)
 
 }
