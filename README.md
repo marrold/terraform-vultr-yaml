@@ -149,4 +149,4 @@ servers:
 - **private_networks**: A list of private networks to attach. Default behaviour is to not attach a private network.
 - **script**: The name of a script to run on first boot.
 - **firewall**: The name of the firewall group to attach to the server. Default is none.
-- ** ssh_key**: A list of ssh keys to associate with the server.
+- **ssh_key**: A list of ssh keys to associate with the server.
