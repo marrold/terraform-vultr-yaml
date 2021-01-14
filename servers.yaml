@@ -14,9 +14,10 @@ servers:
     region: new-jersey
     os: debian_10
     firewall: allow_all
+    keys:
+      - provisioning
 
   test-03:
-    region: london
-    iso: freepbx15_SNG7-PBX-64bit-2002
+    iso: ubuntu-20.10-live-server-amd64
     keys:
       - provisioning
