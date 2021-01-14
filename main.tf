@@ -20,6 +20,13 @@ module "build_isos" {
 
 }
 
+module "build_ssh_keys" {
+  source = "./modules/keys"
+
+  yaml = file("keys.yaml")
+
+}
+
 module "build_servers" {
   source = "./modules/server"
 
@@ -29,6 +36,7 @@ module "build_servers" {
   network_ids  = module.build_networks.network_ids
   firewall_ids = module.build_firewalls.firewall_ids
   iso_ids      = module.build_isos.iso_ids
+  key_ids      = module.build_ssh_keys.key_ids
   script_ids   = local.script_ids
 
   yaml         = file("servers.yaml")

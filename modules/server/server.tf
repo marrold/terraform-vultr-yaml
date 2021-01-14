@@ -1,7 +1,7 @@
 locals {
 
   raw_yaml = var.yaml
-  decoded_yaml = yamldecode(local.raw_yaml)
+  decoded_yaml = try(yamldecode(local.raw_yaml), {})
 
 }
 
@@ -9,8 +9,8 @@ resource "vultr_instance" "server" {
 
     for_each = try(local.decoded_yaml.servers != null ? local.decoded_yaml.servers : tomap(false), {})
 
-    plan              = lookup(each.value, "plan", null) != null ? var.plan_ids[each.value.plan].id : 201                # Defaults to £5 instance
-    region            = lookup(each.value, "region", null) != null ? var.region_ids[each.value.region].id : 8            # Defaults to London
+    plan              = lookup(each.value, "plan", null) != null ? var.plan_ids[each.value.plan].id : "vc2-1c-1gb"       # Defaults to £5 instance
+    region            = lookup(each.value, "region", null) != null ? var.region_ids[each.value.region].id : "lhr"        # Defaults to London
     firewall_group_id = lookup(each.value, "firewall", null)!= null ? var.firewall_ids[each.value.firewall].id : null    # Defaults to none
 
     os_id             = lookup(each.value, "os", null) != null ? var.os_ids[each.value.os].id : null
@@ -25,7 +25,7 @@ resource "vultr_instance" "server" {
     # If the key doesn't exist it will fail with the cryptic error "Null values are not allowed for this attribute value."
     ssh_key_ids = lookup(each.value, "keys", null) != null ? flatten([
       for key in each.value.keys : [
-        lookup(var.key_ids, key, null) != null ? var.key_ids[key].id : []
+        lookup(var.key_ids, key, null) != null ? list(var.key_ids[key].id) : []
       ]
     ]) : []
 

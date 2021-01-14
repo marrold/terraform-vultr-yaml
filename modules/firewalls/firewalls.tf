@@ -2,9 +2,9 @@ locals {
 
   raw_yaml = var.yaml
 
-  decoded_yaml = yamldecode(local.raw_yaml)
+  decoded_yaml = try(yamldecode(local.raw_yaml), {})
 
-  firewall_groups_keys = local.decoded_yaml.firewalls != null ? keys(local.decoded_yaml.firewalls) : []
+  firewall_groups_keys = try(keys(local.decoded_yaml.firewalls), [])
 
   firewall_rules_list = flatten([
 
@@ -26,7 +26,7 @@ locals {
 
 resource "vultr_firewall_group" "firewall_group" {
 
-  for_each = local.decoded_yaml.firewalls != null ? local.decoded_yaml.firewalls : {}
+  for_each = try(local.decoded_yaml.firewalls, {})
 
   description = each.key
 
