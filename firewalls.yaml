@@ -4,13 +4,12 @@ firewalls:
     - notes: "Allow UDP SIP from WD18"
       protocol: udp
       network: 0.0.0.0/0
-      from_port: 5060
+      port: 5060
 
     - notes: "Allow all RTP"
       protocol: udp
       network: 0.0.0.0/0
-      from_port: 10000
-      to_port: 20000
+      port: 10000:20000
 
   allow_all:
     - notes: "Allow all TCP"
@@ -25,4 +24,4 @@ firewalls:
     - notes: "Allow SSH from office"
       protocol: tcp
       network: 93.184.216.34/32
-      from_port: 22
+      port: 22
