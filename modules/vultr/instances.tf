@@ -1,20 +1,25 @@
 locals {
 
-  raw_yaml = var.yaml
-  decoded_yaml = try(yamldecode(local.raw_yaml), {})
+  instances_raw_yaml = var.instance_yaml
+  instances_decoded_yaml = try(yamldecode(local.instances_raw_yaml), {})
+
+  firewall_ids = vultr_firewall_group.firewall_group
+  iso_ids = vultr_iso_private.iso
+  key_ids = vultr_ssh_key.keys
+  network_ids = vultr_private_network.network
 
 }
 
 resource "vultr_instance" "server" {
 
-    for_each = try(local.decoded_yaml.servers != null ? local.decoded_yaml.servers : tomap(false), {})
+    for_each = try(local.instances_decoded_yaml.servers != null ? local.instances_decoded_yaml.servers : tomap(false), {})
 
     plan              = lookup(each.value, "plan", null) != null ? var.plan_ids[each.value.plan].id : "vc2-1c-1gb"       # Defaults to £5 instance
     region            = lookup(each.value, "region", null) != null ? var.region_ids[each.value.region].id : "lhr"        # Defaults to London
-    firewall_group_id = lookup(each.value, "firewall", null)!= null ? var.firewall_ids[each.value.firewall].id : null    # Defaults to none
+    firewall_group_id = lookup(each.value, "firewall", null)!= null ? local.firewall_ids[each.value.firewall].id : null    # Defaults to none
 
     os_id             = lookup(each.value, "os", null) != null ? var.os_ids[each.value.os].id : null
-    iso_id            = lookup(each.value, "iso", null)!= null ? var.iso_ids[each.value.iso].id : null
+    iso_id            = lookup(each.value, "iso", null)!= null ? local.iso_ids[each.value.iso].id : null
 
     label     = each.key
     tag       = each.key
@@ -25,7 +30,7 @@ resource "vultr_instance" "server" {
     # If the key doesn't exist it will fail with the cryptic error "Null values are not allowed for this attribute value."
     ssh_key_ids = lookup(each.value, "keys", null) != null ? flatten([
       for key in each.value.keys : [
-        lookup(var.key_ids, key, null) != null ? list(var.key_ids[key].id) : []
+        lookup(local.key_ids, key, null) != null ? list(local.key_ids[key].id) : []
       ]
     ]) : []
 
@@ -33,7 +38,7 @@ resource "vultr_instance" "server" {
     # If the network doesn't exist it will fail with the cryptic error "Null values are not allowed for this attribute value."
     private_network_ids = lookup(each.value, "private_networks", null) != null ? flatten([
       for network in each.value.private_networks : [
-        lookup(var.network_ids, network, null) != null ? var.network_ids[network].id : null
+        lookup(local.network_ids, network, null) != null ? local.network_ids[network].id : null
       ]
     ]) : []
 

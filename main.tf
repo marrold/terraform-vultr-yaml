@@ -1,44 +1,15 @@
-module "build_networks" {
-  source = "./modules/network"
-
-  region_ids = local.region_ids
-  yaml = file("networks.yaml")
-
-}
-
-module "build_firewalls" {
-  source = "./modules/firewalls"
-
-  yaml = file("firewalls.yaml")
-
-}
-
-module "build_isos" {
-  source = "./modules/isos"
-
-  yaml = file("isos.yaml")
-
-}
-
-module "build_ssh_keys" {
-  source = "./modules/keys"
-
-  yaml = file("keys.yaml")
-
-}
-
-module "build_servers" {
-  source = "./modules/server"
+module "vultr" {
+  source = "./modules/vultr"
 
   region_ids   = local.region_ids
   plan_ids     = local.plan_ids
   os_ids       = local.os_ids
-  network_ids  = module.build_networks.network_ids
-  firewall_ids = module.build_firewalls.firewall_ids
-  iso_ids      = module.build_isos.iso_ids
-  key_ids      = module.build_ssh_keys.key_ids
   script_ids   = local.script_ids
 
-  yaml         = file("servers.yaml")
+  instance_yaml      = file("servers.yaml")
+  key_yaml           = file("keys.yaml")
+  iso_yaml           = file("isos.yaml")
+  firewall_yaml      = file("firewalls.yaml")
+  networks_yaml      = file("networks.yaml")
 
 }
