@@ -15,10 +15,10 @@ resource "vultr_instance" "server" {
     for_each = try(local.instances_decoded_yaml.servers != null ? local.instances_decoded_yaml.servers : tomap(false), {})
 
     plan              = lookup(each.value, "plan", null) != null ? var.plan_ids[each.value.plan].id : "vc2-1c-1gb"       # Defaults to £5 instance
-    region            = lookup(each.value, "region", null) != null ? var.region_ids[each.value.region].id : "lhr"        # Defaults to London
+    region            = lookup(each.value, "region", null) != null ? local.region_ids[each.value.region].id : "lhr"        # Defaults to London
     firewall_group_id = lookup(each.value, "firewall", null)!= null ? local.firewall_ids[each.value.firewall].id : null    # Defaults to none
 
-    os_id             = lookup(each.value, "os", null) != null ? var.os_ids[each.value.os].id : null
+    os_id             = lookup(each.value, "os", null) != null ? local.os_ids[each.value.os].id : null
     iso_id            = lookup(each.value, "iso", null)!= null ? local.iso_ids[each.value.iso].id : null
 
     label     = each.key

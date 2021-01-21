@@ -1,9 +1,7 @@
 module "vultr" {
   source = "./modules/vultr"
 
-  region_ids   = local.region_ids
   plan_ids     = local.plan_ids
-  os_ids       = local.os_ids
   script_ids   = local.script_ids
 
   instance_yaml      = file("servers.yaml")

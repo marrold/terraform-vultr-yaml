@@ -4,18 +4,8 @@
 #                       #
 #########################
 
-variable "region_ids" {
-  description = "Map of Region IDs"
-  default = {}
-}
-
 variable "plan_ids" {
   description = "Map of Plan IDs"
-  default = {}
-}
-
-variable "os_ids" {
-  description = "Map of OS IDs"
   default = {}
 }
 

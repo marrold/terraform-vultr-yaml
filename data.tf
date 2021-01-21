@@ -17,48 +17,6 @@ locals {
 }
 
 ##########################
-#          OSs           #
-##########################
-
-data "vultr_os" "debian_10" {
-  filter {
-    name   = "name"
-    values = ["Debian 10 x64 (buster)"]
-  }
-}
-
-locals {
-  os_ids = {
-    debian_10: data.vultr_os.debian_10
-  }
-}
-
-##########################
-#        REGIONS         #
-##########################
-
-data "vultr_region" "new-jersey" {
-  filter {
-    name   = "id"
-    values = ["ewr"]
-  }
-}
-
-data "vultr_region" "london" {
-  filter {
-    name   = "id"
-    values = ["lhr"]
-  }
-}
-
-locals {
-  region_ids = {
-    london: data.vultr_region.london
-    new-jersey: data.vultr_region.new-jersey
-  }
-}
-
-##########################
 #        SCRIPTS         #
 ##########################
 
