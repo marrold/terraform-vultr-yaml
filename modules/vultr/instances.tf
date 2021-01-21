@@ -14,7 +14,7 @@ resource "vultr_instance" "server" {
 
     for_each = try(local.instances_decoded_yaml.servers != null ? local.instances_decoded_yaml.servers : tomap(false), {})
 
-    plan              = lookup(each.value, "plan", null) != null ? var.plan_ids[each.value.plan].id : "vc2-1c-1gb"       # Defaults to £5 instance
+    plan              = lookup(each.value, "plan", null) != null ? local.plan_ids[each.value.plan].id : "vc2-1c-1gb"       # Defaults to £5 instance
     region            = lookup(each.value, "region", null) != null ? local.region_ids[each.value.region].id : "lhr"        # Defaults to London
     firewall_group_id = lookup(each.value, "firewall", null)!= null ? local.firewall_ids[each.value.firewall].id : null    # Defaults to none
 

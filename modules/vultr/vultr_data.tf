@@ -324,3 +324,79 @@ locals {
   }
 }
 
+#########################
+#                       #
+#         PLANS         #
+#                       #
+#########################
+
+
+
+data "vultr_plan" "vc2-1c-1gb" {
+  filter {
+    name   = "id"
+    values = ["vc2-1c-1gb"]
+  }
+}
+
+data "vultr_plan" "vc2-1c-2gb" {
+  filter {
+    name   = "id"
+    values = ["vc2-1c-2gb"]
+  }
+}
+
+data "vultr_plan" "vc2-2c-4gb" {
+  filter {
+    name   = "id"
+    values = ["vc2-2c-4gb"]
+  }
+}
+
+data "vultr_plan" "vc2-4c-8gb" {
+  filter {
+    name   = "id"
+    values = ["vc2-4c-8gb"]
+  }
+}
+
+data "vultr_plan" "vc2-6c-16gb" {
+  filter {
+    name   = "id"
+    values = ["vc2-6c-16gb"]
+  }
+}
+
+data "vultr_plan" "vc2-8c-32gb" {
+  filter {
+    name   = "id"
+    values = ["vc2-8c-32gb"]
+  }
+}
+
+data "vultr_plan" "vc2-16c-64gb" {
+  filter {
+    name   = "id"
+    values = ["vc2-16c-64gb"]
+  }
+}
+
+data "vultr_plan" "vc2-24c-96gb" {
+  filter {
+    name   = "id"
+    values = ["vc2-24c-96gb"]
+  }
+}
+
+locals {
+  plan_ids = {
+    vc2-1c-1gb: data.vultr_plan.vc2-1c-1gb
+    vc2-1c-2gb: data.vultr_plan.vc2-1c-2gb
+    vc2-2c-4gb: data.vultr_plan.vc2-2c-4gb
+    vc2-4c-8gb: data.vultr_plan.vc2-4c-8gb
+    vc2-6c-16gb: data.vultr_plan.vc2-6c-16gb
+    vc2-8c-32gb: data.vultr_plan.vc2-8c-32gb
+    vc2-16c-64gb: data.vultr_plan.vc2-16c-64gb
+    vc2-24c-96gb: data.vultr_plan.vc2-24c-96gb
+  }
+}

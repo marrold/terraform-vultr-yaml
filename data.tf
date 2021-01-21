@@ -1,22 +1,4 @@
 ##########################
-#         PLANS          #
-##########################
-
-data "vultr_plan" "nano" {
-  filter {
-    name   = "id"
-    #values = ["1024 MB RAM,25 GB SSD,1.00 TB BW"]
-    values = ["vc2-1c-1gb"]
-  }
-}
-
-locals {
-  plan_ids = {
-    nano: data.vultr_plan.nano
-  }
-}
-
-##########################
 #        SCRIPTS         #
 ##########################
 
