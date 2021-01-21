@@ -1,19 +1,20 @@
-servers:
+instances:
 
   test-01:
-    plan: nano
+    plan: vc2-1c-1gb
     region: london
     os: debian_10
     private_networks:
       - default_london
-    script: Default-Debian
+    script: debian/debian.sh
     firewall: allow_all
 
   test-02:
-    plan: nano
+    plan: vc2-1c-1gb
     region: new-jersey
     os: debian_10
     firewall: allow_all
+    script: default.sh
     keys:
       - provisioning
 
