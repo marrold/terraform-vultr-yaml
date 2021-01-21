@@ -1,4 +1,4 @@
-servers:
+instances:
 
   test-01:
     plan: vc2-1c-1gb
