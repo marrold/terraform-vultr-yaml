@@ -24,7 +24,7 @@ resource "vultr_instance" "server" {
     label     = each.key
     tag       = each.key
     hostname  = each.key
-    script_id = lookup(each.value, "script", null) != null ? var.script_ids[each.value.script].id : null
+    script_id = lookup(each.value, "script", null) != null ? vultr_startup_script.script[each.value.script].id : null
 
     # This mess will generate a list of key_ids. If none are specified it generates an empty list.
     # If the key doesn't exist it will fail with the cryptic error "Null values are not allowed for this attribute value."

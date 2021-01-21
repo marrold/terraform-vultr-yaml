@@ -1,21 +1,5 @@
 #########################
 #                       #
-#         GLOBAL        #
-#                       #
-#########################
-
-variable "plan_ids" {
-  description = "Map of Plan IDs"
-  default = {}
-}
-
-variable "script_ids" {
-  description = "Map of Script IDs"
-  default = {}
-}
-
-#########################
-#                       #
 #       INSTANCES       #
 #                       #
 #########################
@@ -70,5 +54,16 @@ variable "key_yaml" {
 
 variable "networks_yaml" {
   description = "Contents of networks.yaml"
+  type = string
+}
+
+#########################
+#                       #
+#        SCRIPTS        #
+#                       #
+#########################
+
+variable "startup_script_dir" {
+  description = "Path to startup script directory"
   type = string
 }
