@@ -1,7 +1,6 @@
 module "terraform-vultr-yaml" {
   
-  #source = "github.com/marrold/terraform-vultr-yaml?ref=v0.1"
-  source = "../"
+  source = "github.com/marrold/terraform-vultr-yaml?ref=v0.1"
 
   instance_yaml_dirs  = ["config-files/yaml-files", "config-files/other-yaml-files"]
   key_yaml_dirs       = ["config-files/yaml-files"]
