@@ -1,18 +1,46 @@
 locals {
 
-  instances_raw_yaml = var.instance_yaml
-  instances_decoded_yaml = try(yamldecode(local.instances_raw_yaml), {})
+  # Build a list of full paths to yaml files
+  instance_file_full_paths = flatten([
+
+    for path in var.instance_yaml_dirs : [
+      for file in fileset(path, "**") :
+        format("%s/%s", path, file)
+    ]
+  ])
+
+  # Build a list of decoded yaml file contents
+  decoded_instance_yaml_files = flatten([
+    for full_path in local.instance_file_full_paths :
+      try(yamldecode(file(full_path)), {})
+  ])
+
+  # Extract the instance configs and their names and store them in a list, one item per yaml file.
+  extracted_instances = flatten([
+    for instance_map in local.decoded_instance_yaml_files :
+      lookup(instance_map, "instances", {})
+  ])
+ 
+  # Merge everything into a single map
+  merged_instances = zipmap(
+    flatten(
+      [for item in local.extracted_instances  : try(keys(item), [])]
+    ),
+    flatten(
+      [for item in local.extracted_instances : try(values(item), [])]
+    )
+  )
 
   firewall_ids = vultr_firewall_group.firewall_group
   iso_ids = vultr_iso_private.iso
-  key_ids = vultr_ssh_key.keys
+  key_ids = vultr_ssh_key.key
   network_ids = vultr_private_network.network
 
 }
 
 resource "vultr_instance" "instance" {
 
-    for_each = try(local.instances_decoded_yaml.instances != null ? local.instances_decoded_yaml.instances : tomap(false), {})
+    for_each = try(local.merged_instances != null ? local.merged_instances : tomap(false), {})
 
     plan              = lookup(each.value, "plan", null) != null ? local.plan_ids[each.value.plan].id : "vc2-1c-1gb"       # Defaults to £5 instance
     region            = lookup(each.value, "region", null) != null ? local.region_ids[each.value.region].id : "lhr"        # Defaults to London

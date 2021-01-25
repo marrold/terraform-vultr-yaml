@@ -4,9 +4,9 @@
 #                       #
 #########################
 
-variable "instance_yaml" {
-  description = "Contents of servers.yaml"
-  type = string
+variable "instance_yaml_dirs" {
+  description = "List of paths to directories containing yaml files including instances"
+  type = list
 }
 
 
@@ -16,9 +16,9 @@ variable "instance_yaml" {
 #                       #
 #########################
 
-variable "firewall_yaml" {
-  description = "Contents of firewall.yaml"
-  type = string
+variable "firewall_yaml_dirs" {
+  description = "List of paths to directories containing yaml files including firewalls"
+  type = list
 }
 
 
@@ -28,9 +28,9 @@ variable "firewall_yaml" {
 #                       #
 #########################
 
-variable "iso_yaml" {
-  description = "Contents of iso.yaml"
-  type = string
+variable "iso_yaml_dirs" {
+  description = "List of paths to directories containing yaml files including isos"
+  type = list
 }
 
 
@@ -40,9 +40,9 @@ variable "iso_yaml" {
 #                       #
 #########################
 
-variable "key_yaml" {
-  description = "Contents of keys.yaml"
-  type = string
+variable "key_yaml_dirs" {
+  description = "List of paths to directories containing yaml files including keys"
+  type = list
 }
 
 
@@ -52,9 +52,9 @@ variable "key_yaml" {
 #                       #
 #########################
 
-variable "networks_yaml" {
-  description = "Contents of networks.yaml"
-  type = string
+variable "network_yaml_dirs" {
+  description = "List of paths to directories containing yaml files including networks"
+  type = list
 }
 
 #########################
@@ -63,7 +63,7 @@ variable "networks_yaml" {
 #                       #
 #########################
 
-variable "startup_script_dir" {
-  description = "Path to startup script directory"
-  type = string
+variable "startup_script_dirs" {
+  description = "List of paths to directories containing scripts"
+  type = list
 }

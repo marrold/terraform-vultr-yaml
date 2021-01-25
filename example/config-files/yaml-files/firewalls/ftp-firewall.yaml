@@ -1,0 +1,8 @@
+
+firewalls:
+
+  ftp_fw:
+    - notes: "Allow FTP"
+      protocol: udp
+      network: 0.0.0.0/0
+      port: 21

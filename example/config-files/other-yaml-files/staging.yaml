@@ -1,0 +1,6 @@
+instances:
+
+  staging-04:
+    iso: ubuntu-20.10-live-server-amd64
+    keys:
+      - provisioning
