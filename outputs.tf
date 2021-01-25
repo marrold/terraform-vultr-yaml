@@ -27,7 +27,7 @@ output "iso_ids" {
 #########################
 
 output "key_ids" {
-  value = vultr_ssh_key.keys
+   value = vultr_ssh_key.key
 }
 
 
@@ -40,4 +40,15 @@ output "key_ids" {
 output "network_ids" {
   value = vultr_private_network.network
 }
+
+#########################
+#                       #
+#      INSTANCES        #
+#                       #
+#########################
+
+output "instance_ids" {
+  value = vultr_instance.instance
+}
+
 
