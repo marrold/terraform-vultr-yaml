@@ -288,3 +288,7 @@ You can check available regions in the `vultr_data.tf` file in the module.
 -  **firewall**: The name of the firewall group to attach to the instance. Default is none.
 
 -  **keys**: A list of ssh keys to associate with the instance.
+
+## License
+
+This project is licensed under the terms of the _MIT license_
