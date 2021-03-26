@@ -73,6 +73,6 @@ resource "vultr_firewall_rule" "firewall_rule" {
     ip_type     = "v4"
     subnet      = element(split("/", each.value.network), 0)
     subnet_size = element(split("/", each.value.network), 1) 
-    port        = lookup(each.value, "port", "1:65535") 
+    port        = each.value.protocol != "icmp" ? lookup(each.value, "port", "1:65535") : ""
     notes       = each.value.notes
 }
