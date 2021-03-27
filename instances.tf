@@ -1,6 +1,5 @@
+# Build a list of full paths to yaml files
 locals {
-
-  # Build a list of full paths to yaml files
   instance_file_full_paths = flatten([
 
     for path in var.instance_yaml_dirs : [
@@ -71,10 +70,11 @@ resource "vultr_instance" "instance" {
     ]) : []
 
     # We set some defaults
-    user_data        = "{}"
+    user_data        =  "{${lookup(each.value, "user_data", null) != null ? join(",", formatlist("\"%s\":\"%s\"", keys(each.value.user_data), values(each.value.user_data))) : ""}}"
     enable_ipv6      = false
     backups          = false
     ddos_protection  = false
     activation_email = false
 
 }
+
