@@ -8,6 +8,9 @@ instances:
       - default_london
     script: debian/debian.sh
     firewall: allow_all
+    user_data:
+      dog: cat
+      hello: goodbye
 
   test-02:
     plan: vc2-1c-1gb

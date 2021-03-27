@@ -21,7 +21,7 @@ The user can supply the module with a list of paths to the YAML files that terra
                 ├── firewalls.yaml
                 ├── instances.yaml
                 └── networks.yaml
-                
+
 ## Disclaimer
 
 Due to the abstraction layer between the yaml files and terraform it can fail in weird and wonderful ways and the error may not be obvious. It's particularly prone to issues with duplicate data, such as two instances configured with the same name in two different yaml files.
@@ -43,7 +43,7 @@ It's assumed that you already have Terraform installed and configured.
 
 - Edit the `api_key` to the Personal Access Token created in your Vultr account. You can enable API access and get the token from the [Vultr Control Panel](https://my.vultr.com/settings/#settingsapi)
 
-  
+
 
 ### Usage
 
@@ -53,22 +53,22 @@ Each yaml file can contain keys that duplicate those in other files. E.G you cou
 
 If you're not using a particular resource type, such as ISOs, you don't need to define anything in the yaml files
 
-Your .tf file should look something like this, with lists of paths to your directories of yaml files: 
-  
+Your .tf file should look something like this, with lists of paths to your directories of yaml files:
+
     module "terraform-vultr-yaml" {
       source = "github.com/marrold/terraform-vultr-yaml?ref=v0.1"
-    
+
       instance_yaml_dirs  = ["config-files/yaml-files", "config-files/other-yaml-files"]
       key_yaml_dirs       = ["config-files/yaml-files"]
       iso_yaml_dirs       = ["config-files/yaml-files"]
       firewall_yaml_dirs  = ["config-files/yaml-files"]
       network_yaml_dirs   =  ["config-files/yaml-files"]
-    
+
       startup_script_dirs = ["config-files/startup-scripts", "config-files/other-scripts"]
-    
+
     }
 
-  
+
  Once you've configured the module and the yaml files you can run the usual:
 ```
 terraform init
@@ -77,15 +77,15 @@ terraform apply
 
 #### Networks
 
-  
 
-You can create custom private networks and attaching them to you instances. 
-  
+
+You can create custom private networks and attaching them to you instances.
+
 
 **note:** networks are region specific.
 
-  
-  
+
+
 
 ##### Example
 
@@ -113,13 +113,13 @@ networks:
 
 -  **cidr_block**: The subnet to assign to the network. [Mandatory]
 
-  
+
 
 #### Firewalls
 
-  
+
 Creating firewall groups and rules is also supported. An instance can then be attached to a firewall group.
-  
+
 
 ##### Example
 
@@ -155,11 +155,11 @@ firewalls:
 
 ```
 
-  
+
 
 ##### Options
 
-  
+
 
 -  **key**: Used to name the firewall group. Should be unique. [Mandatory]
 
@@ -173,11 +173,11 @@ firewalls:
 
 -  **to_port**: [Optional]
 
-  
+
 
 **N.B:** If neither `from_port` or `to_port` are included, all ports will be accepted. `to_port` is only required for a *range* of ports.
 
-  
+
 
 #### Scripts
 
@@ -197,13 +197,13 @@ isos:
 
 ##### Options
 
-  
+
 
 -  **key**: Used to name the ISO. Should be unique. [Mandatory]
 
 -  **url**: The URL to download the ISO from
 
-  
+
 
 #### Keys
 
@@ -223,13 +223,13 @@ keys:
 
 ##### Options
 
-  
+
 
 -  **key**: Used to name the Key. Should be unique. [Mandatory]
 
 -  **ssh_key**: The SSH Key
 
-  
+
 
 #### Instances
 
@@ -246,6 +246,9 @@ instances:
       - default_london
     script: debian/debian.sh
     firewall: allow_all
+    user_data:
+      dog: cat
+      hello: goodbye
 
   test-02:
     plan: vc2-1c-1gb
@@ -263,11 +266,11 @@ instances:
 
 ```
 
-  
+
 
 ##### Options
 
-  
+
 
 -  **key**: Will be used as the hostname [Mandatory]
 
@@ -288,6 +291,8 @@ You can check available regions in the `vultr_data.tf` file in the module.
 -  **firewall**: The name of the firewall group to attach to the instance. Default is none.
 
 -  **keys**: A list of ssh keys to associate with the instance.
+
+- **user_data**: A list of keys and values to expose to the instance as user data. Note it only supports strings, and doesn't support nested objects. This data will return a JSON object via the vultr API which can be accessed on `curl http://169.254.169.254/latest/user-data` from inside the instance.
 
 ## License
 
